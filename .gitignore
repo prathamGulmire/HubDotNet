@@ -1,0 +1,26 @@
+# Build Folders
+bin/
+obj/
+
+# Visual Studio / Rider / VS Code files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.idea/
+
+# Logs
+*.log
+
+# Publish / deploy folders
+publish/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment / secret files
+appsettings.Development.json
+appsettings.Local.json
+*.secret.json
