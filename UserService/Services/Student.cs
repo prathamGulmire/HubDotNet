@@ -15,6 +15,8 @@ namespace UserService.Services
         string conStr = "Data Source=DESKTOP-27TN82P;Initial Catalog=GCEK;Persist Security Info=True;User ID=sa;Password=12345678;Trust Server Certificate=True;";
         string query = "";
 
+        string _uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+
         public  DataTable GetAllRecords(dbHandler dbHandler,  int id = 0)
         {
             List<GetAllRecordsResponse> records = new List<GetAllRecordsResponse>();
@@ -35,7 +37,7 @@ namespace UserService.Services
             }
         }
 
-        public int AddRecordService(dbHandler dbHandler, AddUSer addUser)
+        public int AddRecordService(dbHandler dbHandler, AddUSerDb addUser)
         {
             string query = @"
                 INSERT INTO Mytable
@@ -50,7 +52,8 @@ namespace UserService.Services
                     Country,
                     State,
                     Pincode,
-                    Password
+                    Password,
+                    imageUrl
                 )
                 VALUES
                 (
@@ -64,7 +67,8 @@ namespace UserService.Services
                     @Country,
                     @State,
                     @Pincode,
-                    @Password
+                    @Password,
+                    @imageUrl
                 );
                 SELECT SCOPE_IDENTITY();";
 
@@ -82,7 +86,8 @@ namespace UserService.Services
                     new SqlParameter("@Country", addUser.Country),
                     new SqlParameter("@State", addUser.State),
                     new SqlParameter("@Pincode", addUser.Pincode),
-                    new SqlParameter("@Password", addUser.password)
+                    new SqlParameter("@Password", addUser.password),
+                    new SqlParameter("@imageUrl", addUser.imageUrl)
                 };
 
                 object result = dbHandler.ExecuteScalarData(query, parameters);
@@ -95,9 +100,24 @@ namespace UserService.Services
             }
         }
 
-        public bool UpdateRecordService(dbHandler dbHandler, UpdateUser updateUser)
+        public bool UpdateRecordService(dbHandler dbHandler, UpdateUserDb updateUser)
         {
-            string query = @"
+            query = "select imageUrl from Mytable where id = @id";
+            SqlParameter[] param =
+            {
+                new SqlParameter("@id", updateUser.Id)
+            };
+
+            string existingFileName = Convert.ToString(dbHandler.ExecuteScalarData(query, param));
+
+            string fullPath = Path.Combine(_uploadPath, existingFileName);
+
+            if (File.Exists(fullPath))
+            {
+                File.Delete(fullPath);
+            }
+
+            query = @"
                 UPDATE Mytable
                 SET
                     FirstName   = @FirstName,
@@ -110,7 +130,8 @@ namespace UserService.Services
                     Country     = @Country,
                     State       = @State,
                     Pincode     = @Pincode,
-                    UpdatedAt   = @UpdatedAt
+                    UpdatedAt   = @UpdatedAt,
+                    imageUrl    = @imageUrl 
                 WHERE Id = @Id";
 
             try
@@ -128,7 +149,8 @@ namespace UserService.Services
                     new SqlParameter("@Country", updateUser.Country),
                     new SqlParameter("@State", updateUser.State),
                     new SqlParameter("@Pincode", updateUser.Pincode),
-                    new SqlParameter("@UpdatedAt", DateTime.Now)
+                    new SqlParameter("@UpdatedAt", DateTime.Now),
+                    new SqlParameter("@imageUrl", updateUser.imageUrl)
                 };
 
                 int rowsAffected = dbHandler.ExecuteNonQueryData(query, parameters);

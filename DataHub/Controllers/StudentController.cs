@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DataHub.Common;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StudentService.BLL;
 using StudentService.Models;
@@ -23,14 +24,36 @@ namespace DataHub.Controllers
 
         [HttpPost]
         [Route("addRecord")]
-        public IActionResult AddRecord([FromBody] AddUSer addUser)
+        public IActionResult AddRecord([FromForm] AddUSer addUser)
         {
             try
             {
                 if (addUser == null)
                     return BadRequest(new { success = false, message = "Invalid user data." });
 
-                int id = studentBLL.AddRecord(addUser);
+                ImageService imageService = new ImageService();
+                AddUSerDb addUserDb = new AddUSerDb
+                {
+                    FirstName = addUser.FirstName,
+                    MiddleName = addUser.MiddleName,
+                    LastName = addUser.LastName,
+                    Email = addUser.Email,
+                    Gender = addUser.Gender,
+                    DateOfBirth = addUser.DateOfBirth,
+                    Address = addUser.Address,
+                    Country = addUser.Country,
+                    State = addUser.State,
+                    Pincode = addUser.Pincode,
+                    password = addUser.password
+                };
+
+                if (addUser.imageFile != null)
+                {
+                    string prefix = addUser.FirstName.Replace(" ", "_");
+                    addUserDb.imageUrl = imageService.SaveImage(addUser.imageFile, prefix);
+                }
+
+                int id = studentBLL.AddRecord(addUserDb);
 
                 return Ok(new
                 {
@@ -47,7 +70,7 @@ namespace DataHub.Controllers
         }
 
         [HttpPut("UpdateRecord")]
-        public IActionResult UpdateRecord([FromBody] UpdateUser updateUser)
+        public IActionResult UpdateRecord([FromForm] UpdateUser updateUser)
         {
             try
             {
@@ -56,7 +79,31 @@ namespace DataHub.Controllers
                     return BadRequest("Invalid user data.");
                 }
 
-                bool updated = studentBLL.UpdateRecord(updateUser);
+
+                ImageService imageService = new ImageService();
+                UpdateUserDb updateUserDb = new UpdateUserDb()
+                {
+                    Id = updateUser.Id,
+                    FirstName = updateUser.FirstName,
+                    LastName = updateUser.LastName,
+                    Email = updateUser.Email,
+                    Gender = updateUser.Gender,
+                    DateOfBirth = updateUser.DateOfBirth,
+                    Address = updateUser.Address,
+                    Country = updateUser.Country,
+                    Pincode = updateUser.Pincode,
+                    Password = updateUser.Password,
+                    State = updateUser.State,
+                    MiddleName = updateUser.MiddleName,
+                };
+
+                if(updateUser.imageFile != null)
+                {
+                    string prefix = updateUser.FirstName.Replace(" ", "_");
+                    updateUserDb.imageUrl = imageService.SaveImage(updateUser.imageFile, prefix);
+                }
+
+                bool updated = studentBLL.UpdateRecord(updateUserDb);
 
                 if (updated)
                     return Ok(new { success = true, message = "User updated successfully" });

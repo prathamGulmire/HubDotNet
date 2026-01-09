@@ -31,7 +31,7 @@ namespace StudentService.BLL
             }
         }
 
-        public int AddRecord(AddUSer addUSer)
+        public int AddRecord(AddUSerDb addUSer)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace StudentService.BLL
             }
         }
 
-        public bool UpdateRecord(UpdateUser updateUser)
+        public bool UpdateRecord(UpdateUserDb updateUser)
         {
             try
             {
