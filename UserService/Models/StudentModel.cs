@@ -64,9 +64,9 @@ namespace StudentService.Models
         public string Gender { get; set; }
         public DateTime? DateOfBirth { get; set; }
 
-        public string Address { get; set; }
+        public string? Address { get; set; }
         public string Country { get; set; }
-        public string State { get; set; }
+        public string? State { get; set; }
         public string Pincode { get; set; }
         public string? imageUrl { get; set; }
     }
@@ -80,12 +80,12 @@ namespace StudentService.Models
         public string Email { get; set; }
         public string Gender { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public string Address { get; set; }
+        public string? Address { get; set; }
         public string Country { get; set; }
-        public string State { get; set; }
+        public string? State { get; set; }
         public string Pincode { get; set; }
         public string Password { get; set; }
-        public IFormFile imageFile { get; set; }
+        public IFormFile? imageFile { get; set; }
     }
 
     public class UpdateUserDb
@@ -97,11 +97,11 @@ namespace StudentService.Models
         public string Email { get; set; }
         public string Gender { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public string Address { get; set; }
+        public string? Address { get; set; }
         public string Country { get; set; }
-        public string State { get; set; }
+        public string? State { get; set; }
         public string Pincode { get; set; }
-        public string imageUrl { get; set; }
+        public string? imageUrl { get; set; }
         public string Password { get; set; }
     }
 
@@ -110,17 +110,17 @@ namespace StudentService.Models
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
-        public string MiddleName { get; set; }
+        public string? MiddleName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Gender { get; set; }
-        public string imageUrl { get; set; }
+        public string? imageUrl { get; set; }
         public DateTime DateOfBirth { get; set; }
         public bool IsActive { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
-        public string Address { get; set; }
-        public string State { get; set; }
+        public string? Address { get; set; }
+        public string? State { get; set; }
         public string Country { get; set; }
         public string password { get; set; }
         public string pincode { get; set; }

@@ -97,7 +97,7 @@ namespace DataHub.Controllers
                     MiddleName = updateUser.MiddleName,
                 };
 
-                if(updateUser.imageFile != null)
+                if(updateUser.imageFile != null && updateUser.imageFile.Length > 0)
                 {
                     string prefix = updateUser.FirstName.Replace(" ", "_");
                     updateUserDb.imageUrl = imageService.SaveImage(updateUser.imageFile, prefix);
