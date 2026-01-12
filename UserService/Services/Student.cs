@@ -12,14 +12,12 @@ namespace UserService.Services
 {
     public class Student
     {
-        string conStr = "Data Source=PRATHMESH0811\\SQLEXPRESS;Initial Catalog=prathamDb;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
         string query = "";
 
         string _uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
 
         public  DataTable GetAllRecords(dbHandler dbHandler,  int id = 0)
         {
-            List<GetAllRecordsResponse> records = new List<GetAllRecordsResponse>();
             query = "select * from Mytable ";
 
             try
