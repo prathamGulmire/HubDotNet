@@ -12,7 +12,7 @@ namespace UserService.Services
 {
     public class Student
     {
-        string conStr = "Data Source=DESKTOP-27TN82P;Initial Catalog=GCEK;Persist Security Info=True;User ID=sa;Password=12345678;Trust Server Certificate=True;";
+        string conStr = "Data Source=PRATHMESH0811\\SQLEXPRESS;Initial Catalog=prathamDb;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
         string query = "";
 
         string _uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
@@ -165,6 +165,20 @@ namespace UserService.Services
 
         public bool DeleteRecordService(dbHandler db, int id)
         {
+            query = "select imageUrl from Mytable where id = @id";
+            SqlParameter[] param =
+            {
+                new SqlParameter("@id", id)
+            };
+
+            string existingFileName = Convert.ToString(db.ExecuteScalarData(query, param));
+
+            string fullPath = Path.Combine(_uploadPath, existingFileName);
+
+            if (File.Exists(fullPath))
+            {
+                File.Delete(fullPath);
+            }
             query = "DELETE FROM Mytable WHERE id = @id";
 
             try

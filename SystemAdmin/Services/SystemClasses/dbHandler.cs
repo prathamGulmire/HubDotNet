@@ -19,7 +19,7 @@ namespace SystemAdmin.Services.SystemClasses
         public SqlConnection Connection => _connection;
         public SqlTransaction Transaction => _transaction;
 
-        string conStr = "Data Source=DESKTOP-27TN82P;Initial Catalog=GCEK;User ID=sa;Password=12345678;Trust Server Certificate=True";
+        string conStr = "Data Source=PRATHMESH0811\\SQLEXPRESS;Initial Catalog=prathamDb;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
 
         public dbHandler(bool withTransaction=false, System.Data.IsolationLevel isolation = System.Data.IsolationLevel.ReadCommitted)
         {
