@@ -1,0 +1,38 @@
+CREATE TABLE Course
+(
+    CourseId INT IDENTITY(1,1) PRIMARY KEY,
+    CourseCode VARCHAR(50) NOT NULL UNIQUE,
+    CourseName VARCHAR(150) NOT NULL,
+    Description VARCHAR(500) NULL,
+    DurationMonths INT NOT NULL,
+    IsActive BIT NOT NULL DEFAULT 1,
+    CreatedAt DATETIME NOT NULL DEFAULT GETDATE(),
+    UpdatedAt DATETIME NULL	
+);
+
+INSERT INTO Course
+(
+    CourseCode,
+    CourseName,
+    Description,
+    DurationMonths
+)
+VALUES
+('JAVA01', 'Java Full Stack', 'Java + Spring Boot + React', 6),
+('DOTNET01', '.NET Full Stack', 'ASP.NET Core + Angular', 6),
+('PY01', 'Python Development', 'Python + Django + REST', 4),
+('DSA01', 'DSA with C++', 'Data Structures & Algorithms', 5);
+
+
+create table StudentCourse
+(
+	StudentCourseId int identity(1, 1) primary key,
+	Sid int not null,
+	Cid int not null,
+	EnrolledOn datetime not null default getdate(),
+
+	constraint FK_studentCourse_Student foreign key (Sid) references Mytable(id),
+	constraint FK_studentCourse_Course foreign key (Cid) references Course(CourseId),
+
+	constraint UQ_studentCourse unique (Sid, Cid)
+);
