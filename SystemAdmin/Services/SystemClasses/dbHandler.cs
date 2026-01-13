@@ -11,10 +11,10 @@ namespace SystemAdmin.Services.SystemClasses
 {
     public class dbHandler: IDisposable
     {
-        private readonly SqlTransaction _transaction;
-        private readonly SqlConnection _connection;
+        private SqlTransaction _transaction;
+        private SqlConnection _connection;
         int intTimeOutPeriod = 50000;
-        private readonly bool ExecuteWithTransaction = false;
+        private bool ExecuteWithTransaction = false;
 
         public SqlConnection Connection => _connection;
         public SqlTransaction Transaction => _transaction;
