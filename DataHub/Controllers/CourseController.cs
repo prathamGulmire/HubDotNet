@@ -96,7 +96,7 @@ namespace DataHub.Controllers
                 if (isDeleted)
                     return Ok(new { success = true, message = "Course deleted successfully" });
                 else
-                    return NotFound(new { success = false, message = "Course not found" });
+                    return Ok(new { success = false, message = "Course not found" });
             }
             catch(Exception ex)
             {

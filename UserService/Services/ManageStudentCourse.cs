@@ -58,5 +58,32 @@ namespace StudentService.Services
                 throw;
             }
         }
+
+        public bool UnassignCoursesByStudentId(dbHandler db, int studentId, List<int> courseIds)
+        {
+            if (courseIds == null || courseIds.Count == 0)
+                return false;
+
+            string query = @"
+                        DELETE FROM StudentCourse
+                        WHERE Sid = @Sid AND Cid IN (" + string.Join(",", courseIds) + ")";
+
+            try
+            {
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@Sid", studentId)
+                };
+
+                int rows = db.ExecuteNonQueryData(query, parameters);
+                return rows > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error in UnassignCoursesByStudentId: " + ex);
+                throw;
+            }
+        }
+
     }
 }

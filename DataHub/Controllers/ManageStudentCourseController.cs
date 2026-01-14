@@ -56,5 +56,26 @@ namespace DataHub.Controllers
                 throw;
             }
         }
+
+        [HttpPost]
+        [Route("unassign")]
+        public IActionResult UnassignCourses([FromBody] UnAssignCourseRequest model)
+        {
+            if (model == null || model.studentId <= 0 || model.courseIds == null || !model.courseIds.Any())
+            {
+                return BadRequest("Invalid request.");
+            }
+
+            bool result = manageStudentCourseBLL.UnassignCourses(
+                model.studentId,
+                model.courseIds
+            );
+
+            return Ok(new
+            {
+                success = result,
+                message = result ? "Courses unassigned successfully" : "No courses were unassigned"
+            });
+        }
     }
 }

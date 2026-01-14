@@ -124,11 +124,18 @@ namespace StudentService.Models
         public string Country { get; set; }
         public string password { get; set; }
         public string pincode { get; set; }
+        public string role { get; set; }
     }
 
     public class LoginStudent
     {
         public string email { get; set; }
         public string password { get; set; }
+    }
+
+    public class LoginResponse
+    {
+        public int id { get; set; }
+        public string role { get; set; }
     }
 }

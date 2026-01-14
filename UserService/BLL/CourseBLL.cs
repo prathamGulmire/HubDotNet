@@ -79,7 +79,6 @@ namespace StudentService.BLL
                 bool isDeleted = course.DeleteCourse(db, courseId);
 
                 return isDeleted;
-
             }
             catch(Exception ex)
             {

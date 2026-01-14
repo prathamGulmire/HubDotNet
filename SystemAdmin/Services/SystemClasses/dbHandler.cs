@@ -114,6 +114,35 @@ namespace SystemAdmin.Services.SystemClasses
             }
         }
 
+        public DataTable GetDataWithParams(string query, SqlParameter[] parameters)
+        {
+            DataTable dt = new DataTable();
+            SqlDataAdapter da;
+            SqlCommand cmd;
+
+            try
+            {
+                cmd = new SqlCommand(query, _connection);
+                if (ExecuteWithTransaction == true)
+                {
+                    cmd.Transaction = _transaction;
+                }
+                cmd.CommandTimeout = intTimeOutPeriod;
+                if (parameters != null)
+                {
+                    cmd.Parameters.AddRange(parameters);
+                }
+                da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error in GetData dbHandler: ", ex.ToString());
+                throw;
+            }
+        }
+
         public object ExecuteScalarData(string query, SqlParameter[] parameters)
         {
             SqlCommand cmd;

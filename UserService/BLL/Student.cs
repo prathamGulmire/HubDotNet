@@ -85,16 +85,18 @@ namespace StudentService.BLL
             }
         }
 
-        public int? Login(LoginStudent login)
+        public IEnumerable<LoginResponse> Login(LoginStudent login)
         {
             try
             {
                 dbHandler db = new dbHandler();
                 Student student = new Student();
+                DataTable dt = new DataTable();
 
-                int? id = student.Login(db, login);
+                dt = student.Login(db, login);
+                List<LoginResponse> res = dt.DataTableToList<LoginResponse>();
 
-                return id;
+                return res;
             }
             catch (Exception ex)
             {

@@ -50,5 +50,23 @@ namespace StudentService.BLL
                 throw;
             }
         }
+
+        public bool UnassignCourses(int studentId, List<int> courseIds)
+        {
+            dbHandler db = new dbHandler(true); // transaction enabled
+            ManageStudentCourse service = new ManageStudentCourse();
+
+            try
+            {
+                bool result = service.UnassignCoursesByStudentId(db, studentId, courseIds);
+                db.Commit();
+                return result;
+            }
+            catch
+            {
+                db.RollBack();
+                throw;
+            }
+        }
     }
 }

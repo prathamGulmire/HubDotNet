@@ -16,6 +16,12 @@ namespace StudentService.Models
         public List<int> CourseIds { get; set; }
     }
 
+    public class UnAssignCourseRequest
+    {
+        public int studentId { get; set; }
+        public List<int> courseIds { get; set; }
+    }
+
     public class GetCoursesByStudentID
     {
         public int Sid { get; set; }

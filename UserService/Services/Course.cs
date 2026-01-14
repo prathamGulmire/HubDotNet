@@ -91,10 +91,24 @@ namespace StudentService.Services
 
         public bool DeleteCourse(dbHandler db, int CourseId)
         {
-            query = "delete from Course where CourseId=@CourseId";
-
             try
             {
+                query = "select count(1) from StudentCourse where Cid=@Cid";
+
+                SqlParameter[] sqls =
+                {
+                    new SqlParameter("@Cid", CourseId)
+                };
+
+                int count = Convert.ToInt32(db.ExecuteScalarData(query, sqls));
+
+                if(count > 0)
+                {
+                    return false;
+                }
+
+                query = "delete from Course where CourseId=@CourseId";
+
                 SqlParameter[] sqlParameters =
                 {
                     new SqlParameter("@CourseId", CourseId),

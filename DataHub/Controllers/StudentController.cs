@@ -145,16 +145,12 @@ namespace DataHub.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginStudent login)
         {
-            int? studentId = studentBLL.Login(login);
+            var res = studentBLL.Login(login);
 
-            if (studentId == null)
+            if (res == null)
                 return Unauthorized(new { message = "Invalid email or password" });
 
-            return Ok(new
-            {
-                message = "Login successful",
-                studentId = studentId
-            });
+            return Ok(res);
         }
     }
 }

@@ -197,12 +197,11 @@ namespace UserService.Services
             }
         }
 
-        public int? Login(dbHandler db, LoginStudent loginStudent)
+        public DataTable Login(dbHandler db, LoginStudent loginStudent)
         {
-            string query = @"SELECT id 
+            string query = @"SELECT id, role
                      FROM Mytable 
                      WHERE email = @email AND password = @password";
-
             try
             {
                 SqlParameter[] sqlParameters =
@@ -211,12 +210,7 @@ namespace UserService.Services
                     new SqlParameter("@password", loginStudent.password)
                 };
 
-                object result = db.ExecuteScalarData(query, sqlParameters);
-
-                if (result != null)
-                    return Convert.ToInt32(result);
-
-                return null; // invalid login
+                return db.GetDataWithParams(query, sqlParameters);
             }
             catch (Exception ex)
             {
