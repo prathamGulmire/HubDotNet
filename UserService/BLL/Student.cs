@@ -16,13 +16,15 @@ namespace StudentService.BLL
         {
             try
             {
-                dbHandler dbHandler = new dbHandler();
-                Student student = new Student();
-                DataTable dt = new DataTable();
-                dt = student.GetAllRecords(dbHandler, id);
-                List<GetAllRecordsResponse> res = dt.DataTableToList<GetAllRecordsResponse>();
+                using (dbHandler dbHandler = new dbHandler())
+                {
+                    Student student = new Student();
+                    DataTable dt = new DataTable();
+                    dt = student.GetAllRecords(dbHandler, id);
+                    List<GetAllRecordsResponse> res = dt.DataTableToList<GetAllRecordsResponse>();
 
-                return res;
+                    return res;
+                }
             }
             catch(Exception ex)
             {
@@ -35,12 +37,14 @@ namespace StudentService.BLL
         {
             try
             {
-                dbHandler db = new dbHandler();
-                Student student = new Student();
+                using (dbHandler db = new dbHandler())
+                {
+                    Student student = new Student();
 
-                int id = student.AddRecordService(db, addUSer);
+                    int id = student.AddRecordService(db, addUSer);
 
-                return id;
+                    return id;
+                }
             }
             catch(Exception ex)
             {
@@ -53,12 +57,14 @@ namespace StudentService.BLL
         {
             try
             {
-                dbHandler db = new dbHandler();
-                Student student = new Student();
+                using (dbHandler db = new dbHandler())
+                {
+                    Student student = new Student();
 
-                bool isUpdated = student.UpdateRecordService(db, updateUser);
+                    bool isUpdated = student.UpdateRecordService(db, updateUser);
 
-                return isUpdated;
+                    return isUpdated;
+                }
             }
             catch(Exception ex)
             {
@@ -71,12 +77,14 @@ namespace StudentService.BLL
         {
             try
             {
-                dbHandler db = new dbHandler();
-                Student student = new Student();
+                using (dbHandler db = new dbHandler())
+                {
+                    Student student = new Student();
 
-                bool deleted = student.DeleteRecordService(db, id);
+                    bool deleted = student.DeleteRecordService(db, id);
 
-                return deleted;
+                    return deleted;
+                }
             }
             catch(Exception ex)
             {
@@ -89,14 +97,16 @@ namespace StudentService.BLL
         {
             try
             {
-                dbHandler db = new dbHandler();
-                Student student = new Student();
-                DataTable dt = new DataTable();
+                using (dbHandler db = new dbHandler())
+                {
+                    Student student = new Student();
+                    DataTable dt = new DataTable();
 
-                dt = student.Login(db, login);
-                List<LoginResponse> res = dt.DataTableToList<LoginResponse>();
+                    dt = student.Login(db, login);
+                    List<LoginResponse> res = dt.DataTableToList<LoginResponse>();
 
-                return res;
+                    return res;
+                }
             }
             catch (Exception ex)
             {

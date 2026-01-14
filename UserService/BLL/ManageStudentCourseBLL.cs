@@ -14,35 +14,41 @@ namespace StudentService.BLL
     {
         public void AssignCourse(AssignCourseRequest assignCourse)
         {
-            dbHandler db = new dbHandler(withTransaction: true);
-            ManageStudentCourse manage = new ManageStudentCourse();
+            using (dbHandler db = new dbHandler(withTransaction: true))
+            {
+                ManageStudentCourse manage = new ManageStudentCourse();
 
-            try
-            {
-                manage.AssignCourse(db, assignCourse);
-                db.Commit();
+                try
+                {
+                    manage.AssignCourse(db, assignCourse);
+                    db.Commit();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error in BLL AssignCourse: ", ex.ToString());
+                    db.RollBack();
+                }
             }
-            catch(Exception ex)
-            {
-                Console.WriteLine("Error in BLL AssignCourse: ", ex.ToString());
-                db.RollBack();
-            }
+                
         }
 
         public IEnumerable<int> GetCoursesByStudentId(int id)
         {
             try
             {
-                dbHandler db = new dbHandler();
-                DataTable dt = new DataTable();
-                ManageStudentCourse manageStudentCourse = new ManageStudentCourse();
+                using (dbHandler db = new dbHandler())
+                {
+                    DataTable dt = new DataTable();
+                    ManageStudentCourse manageStudentCourse = new ManageStudentCourse();
 
-                dt = manageStudentCourse.GetCoursesByStudentId(db, id);
-                List<int> res = dt.AsEnumerable()
-                              .Select(row => Convert.ToInt32(row["Cid"]))
-                              .ToList();
+                    dt = manageStudentCourse.GetCoursesByStudentId(db, id);
+                    List<int> res = dt.AsEnumerable()
+                                  .Select(row => Convert.ToInt32(row["Cid"]))
+                                  .ToList();
 
-                return res;
+                    return res;
+                }
+                    
             }
             catch(Exception ex)
             {
@@ -53,20 +59,22 @@ namespace StudentService.BLL
 
         public bool UnassignCourses(int studentId, List<int> courseIds)
         {
-            dbHandler db = new dbHandler(true); // transaction enabled
-            ManageStudentCourse service = new ManageStudentCourse();
+            using (dbHandler db = new dbHandler(true)) // transaction enabled
+            {
+                ManageStudentCourse service = new ManageStudentCourse();
 
-            try
-            {
-                bool result = service.UnassignCoursesByStudentId(db, studentId, courseIds);
-                db.Commit();
-                return result;
-            }
-            catch
-            {
-                db.RollBack();
-                throw;
-            }
+                try
+                {
+                    bool result = service.UnassignCoursesByStudentId(db, studentId, courseIds);
+                    db.Commit();
+                    return result;
+                }
+                catch
+                {
+                    db.RollBack();
+                    throw;
+                }
+            } 
         }
     }
 }

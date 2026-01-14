@@ -17,14 +17,17 @@ namespace StudentService.BLL
         {
             try
             {
-                dbHandler db = new dbHandler();
-                DataTable dt = new DataTable();
-                Course course = new Course();
-                dt = course.GetAllCourses(db, id);
+                using (dbHandler db = new dbHandler())
+                {
+                    DataTable dt = new DataTable();
+                    Course course = new Course();
+                    dt = course.GetAllCourses(db, id);
 
-                List<GetCourseRecord> records = dt.DataTableToList<GetCourseRecord>();
+                    List<GetCourseRecord> records = dt.DataTableToList<GetCourseRecord>();
 
-                return records;
+                    return records;
+                }
+                    
             }
             catch(Exception ex)
             {
@@ -37,12 +40,15 @@ namespace StudentService.BLL
         {
             try
             {
-                dbHandler db = new dbHandler();
-                Course course = new Course();
+                using (dbHandler db = new dbHandler())
+                {
+                    Course course = new Course();
 
-                int courseId = course.AddCourse(db, addCourse);
+                    int courseId = course.AddCourse(db, addCourse);
 
-                return courseId;
+                    return courseId;
+                }
+                    
             }
             catch(Exception ex)
             {
@@ -55,12 +61,15 @@ namespace StudentService.BLL
         {
             try
             {
-                dbHandler db = new dbHandler();
-                Course course = new Course();
+                using (dbHandler db = new dbHandler())
+                {
+                    Course course = new Course();
 
-                bool isUpdated = course.UpdateCourse(db, updateCourse);
+                    bool isUpdated = course.UpdateCourse(db, updateCourse);
 
-                return isUpdated;
+                    return isUpdated;
+                }
+                    
             }
             catch(Exception ex)
             {
@@ -73,12 +82,15 @@ namespace StudentService.BLL
         {
             try
             {
-                dbHandler db = new dbHandler();
-                Course course = new Course();
+                using (dbHandler db = new dbHandler())
+                {
+                    Course course = new Course();
 
-                bool isDeleted = course.DeleteCourse(db, courseId);
+                    bool isDeleted = course.DeleteCourse(db, courseId);
 
-                return isDeleted;
+                    return isDeleted;
+                }
+                    
             }
             catch(Exception ex)
             {
