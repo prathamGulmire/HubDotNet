@@ -133,7 +133,7 @@ namespace DataHub.Controllers
                 if (deleted)
                     return Ok(new { success = true, message = "Student deleted successfully" });
                 else
-                    return NotFound(new { success = false, message = "Student not found" });
+                    return Ok(new { success = false, message = "Courses are assigned to students" });
             }
             catch (Exception ex)
             {

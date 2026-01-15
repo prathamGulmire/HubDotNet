@@ -163,6 +163,20 @@ namespace UserService.Services
 
         public bool DeleteRecordService(dbHandler db, int id)
         {
+            query = "select count(1) from StudentCourse where Sid=@Sid";
+
+            SqlParameter[] sqls =
+            {
+                new SqlParameter("@Sid", id)
+            };
+
+            int count = Convert.ToInt32(db.ExecuteScalarData(query, sqls));
+
+            if(count > 0)
+            {
+                return false;
+            }
+
             query = "select imageUrl from Mytable where id = @id";
             SqlParameter[] param =
             {
