@@ -105,6 +105,12 @@ namespace StudentService.BLL
                     dt = student.Login(db, login);
                     List<LoginResponse> res = dt.DataTableToList<LoginResponse>();
 
+                    if(res != null && res.Count > 0)
+                    {
+                        int id = res[0].id;
+                        student.UpdateLastLogin(db, id);
+                    }
+
                     return res;
                 }
             }

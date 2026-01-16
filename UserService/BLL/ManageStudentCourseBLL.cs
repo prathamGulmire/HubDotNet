@@ -28,8 +28,7 @@ namespace StudentService.BLL
                     Console.WriteLine("Error in BLL AssignCourse: ", ex.ToString());
                     db.RollBack();
                 }
-            }
-                
+            } 
         }
 
         public IEnumerable<int> GetCoursesByStudentId(int id)
@@ -59,7 +58,7 @@ namespace StudentService.BLL
 
         public bool UnassignCourses(int studentId, List<int> courseIds)
         {
-            using (dbHandler db = new dbHandler(true)) // transaction enabled
+            using (dbHandler db = new dbHandler(true)) 
             {
                 ManageStudentCourse service = new ManageStudentCourse();
 

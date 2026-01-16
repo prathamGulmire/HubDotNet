@@ -232,5 +232,21 @@ namespace UserService.Services
                 throw;
             }
         }
+
+        public void UpdateLastLogin(dbHandler db, int userId)
+        {
+            string query = @"
+                        UPDATE Mytable
+                        SET LastLoginAt = GETDATE()
+                        WHERE id = @id";
+
+            SqlParameter[] sqlParameters =
+            {
+                new SqlParameter("@id", userId)
+            };
+
+            db.ExecuteNonQueryData(query, sqlParameters);
+        }
+
     }
 }
