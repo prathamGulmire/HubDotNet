@@ -79,7 +79,6 @@ namespace DataHub.Controllers
                     return BadRequest("Invalid user data.");
                 }
 
-
                 ImageService imageService = new ImageService();
                 UpdateUserDb updateUserDb = new UpdateUserDb()
                 {
@@ -101,6 +100,9 @@ namespace DataHub.Controllers
                 {
                     string prefix = updateUser.FirstName.Replace(" ", "_");
                     updateUserDb.imageUrl = imageService.SaveImage(updateUser.imageFile, prefix);
+                } else
+                {
+                    updateUserDb.imageUrl = null;
                 }
 
                 bool updated = studentBLL.UpdateRecord(updateUserDb);

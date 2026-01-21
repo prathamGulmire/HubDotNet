@@ -108,11 +108,18 @@ namespace UserService.Services
 
             string existingFileName = Convert.ToString(dbHandler.ExecuteScalarData(query, param));
 
-            string fullPath = Path.Combine(_uploadPath, existingFileName);
-
-            if (File.Exists(fullPath))
+            if(updateUser.imageUrl == null)
             {
-                File.Delete(fullPath);
+                updateUser.imageUrl = existingFileName;
+            } 
+            else
+            {
+                string fullPath = Path.Combine(_uploadPath, existingFileName);
+
+                if (File.Exists(fullPath))
+                {
+                    File.Delete(fullPath);
+                }
             }
 
             query = @"
