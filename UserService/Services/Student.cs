@@ -136,6 +136,7 @@ namespace UserService.Services
                     State       = @State,
                     Pincode     = @Pincode,
                     UpdatedAt   = @UpdatedAt,
+                    Password    = @Password,
                     imageUrl    = @imageUrl 
                 WHERE Id = @Id";
 
@@ -155,6 +156,7 @@ namespace UserService.Services
                     new SqlParameter("@State", updateUser.State),
                     new SqlParameter("@Pincode", updateUser.Pincode),
                     new SqlParameter("@UpdatedAt", DateTime.Now),
+                    new SqlParameter("@Password", updateUser.Password),
                     new SqlParameter("@imageUrl", updateUser.imageUrl)
                 };
 
