@@ -30,7 +30,7 @@ namespace UserService.Services
             }
             catch(Exception ex)
             {
-                Console.WriteLine("Error in service User: ", ex.Message.ToString());
+                Console.WriteLine("Error in service GetAllRecords: ", ex.Message.ToString());
                 throw;
             }
         }
@@ -44,6 +44,7 @@ namespace UserService.Services
                     MiddleName,
                     LastName,
                     Email,
+                    DepartmentId,
                     Gender,
                     DateOfBirth,
                     Address,
@@ -59,6 +60,7 @@ namespace UserService.Services
                     @MiddleName,
                     @LastName,
                     @Email,
+                    @DepartmentId,
                     @Gender,
                     @DateOfBirth,
                     @Address,
@@ -79,6 +81,7 @@ namespace UserService.Services
                     new SqlParameter("@LastName", addUser.LastName),
                     new SqlParameter("@Email", addUser.Email),
                     new SqlParameter("@Gender", addUser.Gender),
+                    new SqlParameter("@DepartmentId", addUser.DepartmentId),
                     new SqlParameter("@DateOfBirth", addUser.DateOfBirth),
                     new SqlParameter("@Address", addUser.Address),
                     new SqlParameter("@Country", addUser.Country),
@@ -130,6 +133,7 @@ namespace UserService.Services
                     LastName    = @LastName,
                     Email       = @Email,
                     Gender      = @Gender,
+                    DepartmentId= @DepartmentId,
                     DateOfBirth = @DateOfBirth,
                     Address     = @Address,
                     Country     = @Country,
@@ -150,6 +154,7 @@ namespace UserService.Services
                     new SqlParameter("@LastName", updateUser.LastName),
                     new SqlParameter("@Email", updateUser.Email),
                     new SqlParameter("@Gender", updateUser.Gender),
+                    new SqlParameter("@DepartmentId", updateUser.DepartmentId),
                     new SqlParameter("@DateOfBirth", updateUser.DateOfBirth),
                     new SqlParameter("@Address", updateUser.Address),
                     new SqlParameter("@Country", updateUser.Country),

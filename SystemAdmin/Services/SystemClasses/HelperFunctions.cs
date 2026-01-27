@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SystemAdmin.Models;
 
 namespace SystemAdmin.Services.SystemClasses
 {
@@ -23,6 +24,26 @@ namespace SystemAdmin.Services.SystemClasses
             list = JsonConvert.DeserializeObject<List<T>>(temp, JsonConvertSettings);
 
             return list;
+        }
+
+        public static ResponseModel<T> Success<T>(T data, string message = "Success")
+        {
+            return new ResponseModel<T>
+            {
+                IsSuccess = true,
+                Message = message,
+                Data = data 
+            };
+        }
+
+        public static ResponseModel<T> Failure<T>(T data = default, string message = "Failure")
+        {
+            return new ResponseModel<T>
+            {
+                IsSuccess = false,
+                Message = message,
+                Data = data
+            };
         }
     }
 }
