@@ -113,5 +113,25 @@ namespace StudentService.BLL
                 throw;
             }
         }
+
+        public int GetCountOfStudentsInDepartment(int did)
+        {
+            try
+            {
+                using (dbHandler db = new dbHandler())
+                {
+                    int count = departmentService.GetCountOfStudentsInDepartment(db, did);
+                    return count;
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error in BLL GetCountOfStudentsInDepartment: ", ex.ToString());
+                throw;
+            }
+        }
     }
 }
+
+
+

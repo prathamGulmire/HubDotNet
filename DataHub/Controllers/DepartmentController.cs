@@ -87,6 +87,13 @@ namespace DataHub.Controllers
 
                 DepartmentBLL departmentBLL = new DepartmentBLL();
 
+                int count = departmentBLL.GetCountOfStudentsInDepartment(did);
+
+                if(count > 0)
+                {
+                    return Ok(HelperFunctions.Failure(count, "Department has students!"));
+                }
+
                 bool isDeleted = departmentBLL.DeleteDepartment(did);
 
                 if (isDeleted)

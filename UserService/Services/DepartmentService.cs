@@ -27,7 +27,7 @@ namespace StudentService.Services
                     query += " where DepartmentId = @DepartmentId";
                     parameters = new SqlParameter[]
                     {
-                    new SqlParameter("@DepartmentId", did)
+                        new SqlParameter("@DepartmentId", did)
                     };
                 }
 
@@ -128,6 +128,34 @@ namespace StudentService.Services
             catch(Exception ex)
             {
                 Console.WriteLine("Error in service GetDepartmentNameByStudentId: ", ex.ToString());
+                throw;
+            }
+        }
+
+        public int GetCountOfStudentsInDepartment(dbHandler db, int did)
+        {
+            try
+            {
+                query = @"select COUNT(s.firstName) 'no. of students in department'
+                          from Department d 
+                          left join Mytable s
+                          on d.DepartmentId = s.DepartmentId
+                          where d.DepartmentId = @DepartmentId
+                          group by d.DepartmentId;
+                        ";
+
+                SqlParameter[] parameters =
+                {
+                    new SqlParameter("@DepartmentId", did)
+                };
+
+                object countOfStudents = db.ExecuteScalarData(query, parameters);
+
+                return Convert.ToInt32(countOfStudents);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error in service GetCountOfStudentsInDepartment!", ex.ToString());
                 throw;
             }
         }
